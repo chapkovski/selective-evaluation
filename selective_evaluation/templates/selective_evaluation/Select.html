@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Select
+{% endblock %}
+
+{% block content %}
+    {{ formset.management_form }}
+    {% if  formset.non_form_errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ formset.non_form_errors }}
+        </div>
+    {% endif %}
+    <table class="table  table-hover table-striped">
+    <thead>
+    <th class="text-center">Person</th>
+    <th>Select for evaluation:</th>
+    </thead>
+        <colgroup>
+            <col width="45%">
+            <col width="45%" align="">
+        </colgroup>
+        {% for f in formset %}
+            <tr>
+                <td class="text-center">{{ f.instance.item }}</td>
+                <td align="">
+                    {% formfield f.selected label='' %}
+                </td>
+
+                {% for hidden in f.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    {{ form.errors }}
+    {% next_button %}
+
+{% endblock %}
